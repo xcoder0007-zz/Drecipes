@@ -55,6 +55,29 @@ app.get('/', function (req, res) {
 })
 
 
+// Add new recipe 
+
+app.post('/add',function(req,res){
+
+
+    // connect to our database
+  pool.connect(function (err, client, done) {
+    if (err) throw err;
+
+    // execute a query on our database
+    client.query("INSERT INTO recipes (title, ingredients, directions) VALUES ($1,$2,$3)"
+    ,[req.body.title,req.body.ingredients,req.body.directions])
+
+    done();
+    res.redirect('/')
+  });
+
+
+  
+  
+})
+
+
 pool.on('error', function (err, client) {
   // if an error is encountered by a client while it sits idle in the pool
   // the pool itself will emit an error event with both the error and
